@@ -90,7 +90,7 @@ def BoardImage(player_choise,player_turn,Position147,Position258,Position369):
 
 def boardlogic(player_x,player_o):
     board_positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
+    winer == False
     Position147 = ["    |", " 1  |", "----|", "    |", " 4  |", "----|", "    |", " 7  |", "    |"]
     Position258 = ["    |", " 2  |", "----|", "    |", " 5  |", "----|", "    |", " 8  |", "    |"]
     Position369 = ["    ", "  3 ", "----", "    ", "  6 ", "----", "    ", "  9 ", "    "]
@@ -102,12 +102,28 @@ def boardlogic(player_x,player_o):
             print("It is your turn ",player_x , "player X")
             player_choise = input('\nPick a number on the board: ')
             checked_player_choise, board_positions = player_choise_check(player_choise,board_positions)
+            winner = check_winner(Position147, Position258, Position369,winner)
 
         elif len(board_positions) % 2 == 0:
             print("It is your turn ",player_o , "player O")
             player_choise = input('\nPick a number on the board: ')
             checked_player_choise, board_positions = player_choise_check(player_choise, board_positions)
-        BoardImage(player_choise, len(board_positions), Position147, Position258, Position369)
+            winner = check_winner(Position147, Position258, Position369,winner)
+    BoardImage(player_choise, len(board_positions), Position147, Position258, Position369)
+
+
+
+def check_winner(Position147, Position258, Position369):
+
+    #postions = Position147 + Position258 + Position369
+    postions = ["    |", " 1  |", "----|", "    |", " X  |", "----|", "    |", " X  |", "    |"]
+    removetable = str.maketrans('', '', '@#%|- ')
+    out_list = [s.translate(removetable) for s in postions]
+    str_list = list(filter(None, out_list))
+    winning_combo = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    for i in winning_combo:
+        if all(str_list[i]):
+            return winner == True
 
 
 def main():
