@@ -31,7 +31,8 @@ def menu_main():
     else:
         return 0
 
-def name_player_checker(player_name,first_p):
+
+def name_player_checker(player_name, first_p):
     while player_name.isalpha() == False:
         print("\n------------------------------------------------------------------------------")
         print('Your name can only contain letters.')
@@ -47,22 +48,78 @@ def name_player_checker(player_name,first_p):
         player_name = input('\nWhat is your name player O: ')
     return player_name
 
+
+def player_choise_check(player_choise,board_positions):
+    print("ik kom hier ", type(player_choise))
+    # while player_choise.isdigit() == False :
+    #     print("\n------------------------------------------------------------------------------")
+    #     print('You can only pick a number between 1 and 9')
+    #     print("------------------------------------------------------------------------------")
+    #     player_choise = input('\nPick a number on the board: ')
+    while 10 < int(player_choise) < 0:
+        print("\n------------------------------------------------------------------------------")
+        print('You can only pick a number between 1 and 9')
+        print("------------------------------------------------------------------------------")
+        player_choise = input('\nPick a number on the board: ')
+
+    while int(player_choise) not in board_positions:
+        print("This position is not available, please pick a position that is available on the board ")
+        player_choise = input('\nPick a number on the board: ')
+    board_positions.remove(int(player_choise))
+    return player_choise,board_positions
+
 def BoardImage(player_choise,player_turn):
-    empty_board = {'1':'1','2':'2','3':'3',
-                   '4':'4', '5':'5','6':'6',
-                   '7':'7', '8':'8','9':'9'}
+    if player_turn % 2 != 0:
+        player_turn = "X"
+    elif player_turn % 2 == 0:
+        player_turn = "O"
+    player_choise = int(player_choise)
+    Position147 = ["    |", " 1  |", "----|", "    |", " 4  |", "----|", "    |", " 7  |", "    |"]
+    Position258 = ["    |", " 2  |", "----|", "    |", " 5  |", "----|", "    |", " 8  |", "    |"]
+    Position369 = ["    ", "  3 ", "----", "    ", "  6 ", "----", "    ", "  9 ", "    "]
 
-    Position147 = ["    |"," 1  |","----|","    |"," 4  |","----|","    |"," 7  |","    |"]
-    Position258 = ["    |"," 2  |","----|","    |"," 5  |","----|","    |"," 8  |","    |"]
-    Position369 = ["    ","  3 ","----","    ","  6 ","----","    ","  9 ","    "]
-
-    if player_choise == 1 | player_choise == 4 | player_choise == 7:
-        Position147.replace(str(player_choise),player_turn)
+    print(type(player_choise),player_choise)
+    if player_choise == 1 or player_choise == 4 or player_choise == 7:Position147
+        print(str(player_choise), str(player_turn))
+        for string in Position147:
+            lalal = string.replace(str(player_choise), str(player_turn))
+        print(Position147,player_turn)
+        print(lalal)
+        print("----------------")
+        print(Position147)
+    if player_choise == 2 or player_choise == 5 or player_choise == 8:
+        Position258.replace(str(player_choise), str(player_turn))
+    if player_choise == 3 or player_choise == 6 or player_choise == 9:
+        Position369.replace(str(player_choise), str(player_turn))
 
     for i in range(len(Position147)):
-        print(Position147[i],Position258[i],Position369[i])
+         print(Position147[i], Position258[i], Position369[i])
 
 
+def boardlogic(player_x,player_o):
+    board_positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    # Position147 = ["    |", " 1  |", "----|", "    |", " 4  |", "----|", "    |", " 7  |", "    |"]
+    # Position258 = ["    |", " 2  |", "----|", "    |", " 5  |", "----|", "    |", " 8  |", "    |"]
+    # Position369 = ["    ", "  3 ", "----", "    ", "  6 ", "----", "    ", "  9 ", "    "]
+    #
+    # # if player_choise == 1 | player_choise == 4 | player_choise == 7:
+    # #     Position147.replace(str(player_choise), str(player_turn))
+    # #
+    # for i in range(len(Position147)):
+    #      print(Position147[i], Position258[i], Position369[i])
+    player_choise = "0"
+    while len(board_positions) != 0:
+        BoardImage(player_choise,len(board_positions))
+        if len(board_positions) % 2 != 0:
+            print("It is your turn ",player_x , "player X")
+            player_choise = input('\nPick a number on the board: ')
+            checked_player_choise, board_positions = player_choise_check(player_choise,board_positions)
+
+        elif len(board_positions) % 2 == 0:
+            print("It is your turn ",player_o , "player O")
+            player_choise = input('\nPick a number on the board: ')
+            checked_player_choise, board_positions = player_choise_check(player_choise, board_positions)
 
 
 def main():
@@ -75,15 +132,20 @@ def main():
         if number == 1:
             print("------------------------------Tic-tac-toe---------------------------------------")
             player_X = input('What is your name player X: ')
-            player_x = name_player_checker(player_X,"")
+            player_x = name_player_checker(player_X, "")
             player_O = input('What is your name player O: ')
-            player_o = name_player_checker(player_O,player_x)
-
+            player_o = name_player_checker(player_O, player_x)
+            print('\n' * 44)
+            print("--------------------------------------------------------------------------------")
             print("Welcome player X : ", player_x, "and player O ", player_o)
+            print("--------------------------------------------------------------------------------")
 
+            # functie die per beurt vraagt van de nummer is en checkt of die nummer niet gebruikt is of dat de numer klopt
+            # die functie returnt de correcte nummer en de player aan de beurt en dan wordt de functie van de board aangeroepem
+            # die functie verandert dan de board en print dat mooi uit
+            # dan is weer de andere aan de beurt
 
-            BoardImage(player_choise,player_turn)
-
+            boardlogic(player_x,player_o)
 
         if number == 4:
             sys.exit()
