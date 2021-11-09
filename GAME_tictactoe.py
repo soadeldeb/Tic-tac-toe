@@ -50,7 +50,6 @@ def name_player_checker(player_name, first_p):
 
 
 def player_choise_check(player_choise,board_positions):
-    print("ik kom hier ", type(player_choise))
     # while player_choise.isdigit() == False :
     #     print("\n------------------------------------------------------------------------------")
     #     print('You can only pick a number between 1 and 9')
@@ -68,49 +67,37 @@ def player_choise_check(player_choise,board_positions):
     board_positions.remove(int(player_choise))
     return player_choise,board_positions
 
-def BoardImage(player_choise,player_turn):
+def BoardImage(player_choise,player_turn,Position147,Position258,Position369):
+    player_turn += 1
     if player_turn % 2 != 0:
-        player_turn = "X"
+        player = "X"
     elif player_turn % 2 == 0:
-        player_turn = "O"
+        player = "O"
     player_choise = int(player_choise)
-    Position147 = ["    |", " 1  |", "----|", "    |", " 4  |", "----|", "    |", " 7  |", "    |"]
-    Position258 = ["    |", " 2  |", "----|", "    |", " 5  |", "----|", "    |", " 8  |", "    |"]
-    Position369 = ["    ", "  3 ", "----", "    ", "  6 ", "----", "    ", "  9 ", "    "]
 
-    print(type(player_choise),player_choise)
-    if player_choise == 1 or player_choise == 4 or player_choise == 7:Position147
-        print(str(player_choise), str(player_turn))
-        for string in Position147:
-            lalal = string.replace(str(player_choise), str(player_turn))
-        print(Position147,player_turn)
-        print(lalal)
-        print("----------------")
-        print(Position147)
+
+    if player_choise == 1 or player_choise == 4 or player_choise == 7:
+        Position147 = [w.replace(str(player_choise), str(player)) for w in Position147]
     if player_choise == 2 or player_choise == 5 or player_choise == 8:
-        Position258.replace(str(player_choise), str(player_turn))
+        Position258 = [w.replace(str(player_choise), str(player)) for w in Position258]
     if player_choise == 3 or player_choise == 6 or player_choise == 9:
-        Position369.replace(str(player_choise), str(player_turn))
+        Position369 = [w.replace(str(player_choise), str(player)) for w in Position369]
 
     for i in range(len(Position147)):
          print(Position147[i], Position258[i], Position369[i])
 
+    return Position147,Position258,Position369
 
 def boardlogic(player_x,player_o):
     board_positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    # Position147 = ["    |", " 1  |", "----|", "    |", " 4  |", "----|", "    |", " 7  |", "    |"]
-    # Position258 = ["    |", " 2  |", "----|", "    |", " 5  |", "----|", "    |", " 8  |", "    |"]
-    # Position369 = ["    ", "  3 ", "----", "    ", "  6 ", "----", "    ", "  9 ", "    "]
-    #
-    # # if player_choise == 1 | player_choise == 4 | player_choise == 7:
-    # #     Position147.replace(str(player_choise), str(player_turn))
-    # #
-    # for i in range(len(Position147)):
-    #      print(Position147[i], Position258[i], Position369[i])
+    Position147 = ["    |", " 1  |", "----|", "    |", " 4  |", "----|", "    |", " 7  |", "    |"]
+    Position258 = ["    |", " 2  |", "----|", "    |", " 5  |", "----|", "    |", " 8  |", "    |"]
+    Position369 = ["    ", "  3 ", "----", "    ", "  6 ", "----", "    ", "  9 ", "    "]
+
     player_choise = "0"
     while len(board_positions) != 0:
-        BoardImage(player_choise,len(board_positions))
+        Position147,Position258,Position369 = BoardImage(player_choise,len(board_positions),Position147,Position258,Position369)
         if len(board_positions) % 2 != 0:
             print("It is your turn ",player_x , "player X")
             player_choise = input('\nPick a number on the board: ')
@@ -120,6 +107,7 @@ def boardlogic(player_x,player_o):
             print("It is your turn ",player_o , "player O")
             player_choise = input('\nPick a number on the board: ')
             checked_player_choise, board_positions = player_choise_check(player_choise, board_positions)
+        BoardImage(player_choise, len(board_positions), Position147, Position258, Position369)
 
 
 def main():
