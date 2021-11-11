@@ -1,5 +1,5 @@
 # Tic-tac-toe
-## A fun game to play when you are bored !
+ A fun game to play when you are bored !
 
 # Download Instructions (linux terminal)
 ```
